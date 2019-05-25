@@ -1,0 +1,9 @@
+**/__pycache__
+**/.ipynb_checkpoints
+
+figures/*
+!figures/.gitkeep
+
+ann.egg-info
+build
+dist
