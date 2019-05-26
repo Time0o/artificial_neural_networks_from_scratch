@@ -344,7 +344,7 @@ def evaluate_networks(dataset,
         print("profiling: alpha = {}".format(reg))
 
         errors = []
-        for hn in hidden_nodes:
+        for hn in make_iterable(hidden_nodes):
             model = TimeSeriesPredictor(inputs=5,
                                         outputs=1,
                                         hidden_nodes=hn,
@@ -570,7 +570,7 @@ def evaluate_noise1(datasets,
     for dataset in datasets:
         errors = []
 
-        for hn in hidden_nodes:
+        for hn in make_iterable(hidden_nodes):
             model = TimeSeriesPredictor(inputs=5,
                                         outputs=1,
                                         hidden_nodes=hn,
