@@ -1,12 +1,9 @@
 import os
 
-import matplotlib
 import matplotlib.pyplot as plt
-from IPython.display import set_matplotlib_formats
 
 
-FIGSIZE = (4, 4)
-FONTSIZE = 10
+FIGSIZE = (6, 6)
 
 _figdir = None
 
@@ -19,16 +16,12 @@ def figure(rows, cols, size=None):
     if size is None:
         size = figsize(rows, cols)
 
-    _prepare_figure()
-
     return plt.figure(figsize=size)
 
 
 def subplots(rows, cols, size=None):
     if size is None:
         size = figsize(rows, cols)
-
-    _prepare_figure()
 
     return plt.subplots(rows, cols, figsize=size)
 
@@ -41,8 +34,3 @@ def set_figure_dir(figdir):
 def savefig(filename):
     if _figdir is not None:
         plt.savefig(os.path.join(_figdir, filename))
-
-
-def _prepare_figure():
-    set_matplotlib_formats('svg')
-    matplotlib.rcParams['font.size'] = FONTSIZE
