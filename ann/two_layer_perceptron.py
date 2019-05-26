@@ -252,8 +252,7 @@ def plot_validation_error(inputs,
     if not is_iterable(hidden_nodes):
         hidden_nodes = [hidden_nodes]
 
-    _, axes = subplots(len(subsamplings), len(hidden_nodes),
-                       size=figsize(2 * len(subsamplings), 2 * len(hidden_nodes)))
+    _, axes = subplots(len(subsamplings), len(hidden_nodes))
 
     axes = axes.reshape(len(subsamplings), len(hidden_nodes))
 
@@ -304,74 +303,6 @@ def plot_validation_error(inputs,
 
             axes[i, j].legend()
             axes[i, j].grid()
-
-
-def plot_batch_sequential_generalization(inputs,
-                                         labels,
-                                         subsamplings,
-                                         hidden_nodes,
-                                         learning_rate,
-                                         momentum_alpha,
-                                         epochs,
-                                         runs):
-    if not is_iterable(hidden_nodes):
-        hidden_nodes = [hidden_nodes]
-
-    _, axes = subplots(len(subsamplings), len(hidden_nodes))
-    color1, color2 = matplotlib.rcParams['axes.prop_cycle'].by_key()['color'][:2]
-
-    for i, subsampling in enumerate(subsamplings):
-        (inputs_train, labels_train), (inputs_val, labels_val) = \
-            split_samples(inputs,
-                          labels,
-                          subsampling.selectors,
-                          subsampling.fractions)
-
-        for j, hn in enumerate(hidden_nodes):
-            errors_batch = []
-            errors_seq = []
-
-            for _ in range(runs):
-                model = TwoLayerPerceptron(hidden_nodes=hn)
-
-                model.train(inputs_train,
-                            labels_train,
-                            learning_rate=learning_rate,
-                            momentum_alpha=momentum_alpha,
-                            epochs=epochs,
-                            batch=True)
-
-                errors_batch.append(model.error(inputs_val, labels_val))
-
-                model.train(inputs_train,
-                            labels_train,
-                            weights=None,
-                            momentum=None,
-                            learning_rate=learning_rate,
-                            momentum_alpha=momentum_alpha,
-                            epochs=epochs,
-                            batch=False)
-
-                errors_seq.append(model.error(inputs_val, labels_val))
-
-            fmt = "{} hidden nodes, batch update: MSE is {} +/- {}"
-            print(fmt.format(hn, np.mean(errors_batch), np.std(errors_batch)))
-
-            fmt = "{} hidden nodes, sequential update: MSE is {} +/- {}"
-            print(fmt.format(hn, np.mean(errors_seq), np.std(errors_seq)))
-
-            #axes[i, j].hist(errors_batch, alpha=0.5,
-            #                label="Batch Validation Set MSE")
-
-            #axes[i, j].hist(errors_seq, alpha=0.5,
-            #                label="Sequential Validation Set MSE")
-
-            #fmt = "{} Hidden Nodes, Validation Set is {}"
-            #axes[i, j].set_title(fmt.format(hn, subsampling.name))
-            #axes[i, j].set_xlabel("MSE")
-
-            #axes[i, j].legend()
-            #axes[i, j].grid()
 
 
 def plot_learning_curve(inputs,
