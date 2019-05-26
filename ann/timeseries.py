@@ -49,7 +49,7 @@ class TimeSeriesDataset:
 
     def preview(self, ax=None):
         if ax is None:
-            _, ax = subplots(1, 1, size=(16, 8))
+            _, ax = subplots(1, 1, size=figsize(1, 2))
 
             ax.set_title("Training/Validation/Test Split")
             ax.set_xlabel("t")
