@@ -1,7 +1,7 @@
 import numpy as np
 
 from .dataset import plot_dataset, plot_separator
-from .plotting import figsize, subplots
+from .plotting import subplots
 from .subsampling import split_samples
 
 
@@ -114,8 +114,7 @@ def perceptron_plot_generalization(inputs,
                                    iterations,
                                    runs):
 
-    _, axes = subplots(len(subsamplings), 3,
-                       size=figsize(2 * len(subsamplings), 6))
+    _, axes = subplots(len(subsamplings), 3)
 
     for i, subsampling in enumerate(subsamplings):
         precs_a = []
