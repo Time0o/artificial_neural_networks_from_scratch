@@ -10,7 +10,7 @@ from keras.layers import Dense
 from keras.models import Sequential
 from keras.regularizers import l2
 
-from .plotting import figsize, subplots
+from .plotting import subplots
 from .util import make_iterable
 
 
@@ -338,7 +338,7 @@ def evaluate_networks(dataset,
                       ax=None):
 
     if ax is None:
-        _, ax = subplots(1, 1, size=figsize(2, 2))
+        _, ax = subplots(1, 1)
 
     for reg in make_iterable(regularization):
         print("profiling: alpha = {}".format(reg))
@@ -454,7 +454,7 @@ def evaluate_weight_distribution(dataset,
                                  ax=None):
 
     if ax is None:
-        _, ax = subplots(1, 1, size=figsize(2, 2))
+        _, ax = subplots(1, 1)
 
     for reg in make_iterable(regularization):
         model = TimeSeriesPredictor(inputs=5,
